@@ -84,16 +84,11 @@ interface PricingItem {
         <!-- ENDOTERAPIA HIGHLIGHT -->
         <div *ngIf="current?.slug === 'endoterapia'" id="cennik-endoterapia" appScrollReveal class="mb-10">
           <div class="bg-endo-sheet rounded-3xl shadow-xl overflow-hidden px-3 sm:px-8 pt-7 pb-5 sm:pt-7 sm:pb-5">
-            <ng-container *ngTemplateOutlet="brandLogo"></ng-container>
-
             <!-- Title -->
-            <h2 class="font-display text-center uppercase leading-[0.95] mt-5 sm:mt-4 text-[clamp(2rem,10.5vw,3.25rem)] tracking-tight">
+            <h2 class="font-display text-center uppercase leading-[0.95] text-[clamp(2rem,10.5vw,3.25rem)] tracking-tight">
               <span class="block sm:inline text-endo-dark">Cennik</span>
               <span class="block sm:inline text-endo-accent sm:ml-3">Endoterapia</span>
             </h2>
-            <p class="text-center mt-4 sm:mt-3 text-[10px] sm:text-xs tracking-[0.18em] sm:tracking-[0.35em] leading-relaxed uppercase text-endo-muted">
-              Modelowanie · Ujędrnianie<span class="hidden sm:inline"> · </span><br class="sm:hidden">Redukcja cellulitu
-            </p>
 
             <!-- Benefits -->
             <div class="grid grid-cols-3 gap-2 sm:gap-0 mt-6 sm:mt-5 max-w-2xl mx-auto sm:divide-x sm:divide-endo-line">
@@ -154,7 +149,10 @@ interface PricingItem {
                       </p>
                     </div>
                   </div>
-                  <ul class="mt-3 md:mt-4 flex flex-wrap gap-1.5 md:block md:space-y-1">
+                  <p class="mt-3 md:mt-4 text-[9px] font-semibold uppercase tracking-[0.1em] text-endo-accent md:text-center">
+                    Jedna usługa z poniższych
+                  </p>
+                  <ul class="mt-2 flex flex-wrap gap-1.5 md:block md:space-y-1">
                     <li *ngFor="let a of t.areas"
                         class="px-2.5 py-1 rounded-full border border-endo-line bg-white/60 text-xs text-endo-dark
                                md:flex md:gap-2 md:p-0 md:rounded-none md:border-0 md:bg-transparent md:text-xs">
@@ -163,9 +161,6 @@ interface PricingItem {
                   </ul>
                 </div>
                 </div>
-                <p class="px-4 md:px-5 pb-4 text-[11px] italic font-bold text-endo-muted/80">
-                  *Do każdego zakresu (SOLO, DUO, MULTI) do wyboru jedna z powyższych opcji
-                </p>
               </div>
             </div>
 
@@ -226,13 +221,10 @@ interface PricingItem {
         <!-- EMS -->
         <div *ngIf="current?.slug === 'trening-ems'" id="cennik-ems" appScrollReveal class="mb-10">
           <div class="bg-endo-sheet rounded-3xl shadow-xl overflow-hidden px-3 sm:px-8 pt-7 pb-5">
-            <ng-container *ngTemplateOutlet="brandLogo"></ng-container>
-
-            <h2 class="font-display text-center uppercase leading-[0.95] mt-5 sm:mt-4 text-[clamp(2rem,10.5vw,3.25rem)] tracking-tight">
+            <h2 class="font-display text-center uppercase leading-[0.95] text-[clamp(2rem,10.5vw,3.25rem)] tracking-tight">
               <span class="text-endo-dark">Cennik</span>
               <span class="text-endo-accent ml-2 sm:ml-3">EMS</span>
             </h2>
-            <p class="text-center mt-4 sm:mt-3 text-[10px] sm:text-xs tracking-[0.18em] sm:tracking-[0.35em] leading-relaxed uppercase text-endo-muted">Trening EMS</p>
 
             <!-- Benefits -->
             <div class="grid grid-cols-3 gap-2 sm:gap-6 mt-6 sm:mt-5 max-w-2xl mx-auto">
@@ -330,7 +322,7 @@ interface PricingItem {
         </div>
 
         <!-- PAKIETY -->
-        <app-packages *ngIf="current?.slug === 'trening-ems' || current?.slug === 'endoterapia'" class="block mt-12 mb-4 w-screen ml-[calc(50%-50vw)]"></app-packages>
+        <app-packages [minimal]="true" *ngIf="current?.slug === 'trening-ems' || current?.slug === 'endoterapia'" class="block mt-12 mb-4 w-screen ml-[calc(50%-50vw)]"></app-packages>
 
         <!-- CTA -->
         <div class="text-center mt-16" appScrollReveal>
@@ -342,16 +334,6 @@ interface PricingItem {
         </div>
       </div>
     </div>
-    <ng-template #brandLogo>
-      <div class="text-center">
-        <svg class="mx-auto w-24 h-5 text-endo-accent" viewBox="0 0 120 20" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round">
-          <path d="M0 10h44l4-6 5 12 5-14 5 12 3-4h54"/>
-        </svg>
-        <p class="font-display text-[1.75rem] sm:text-3xl text-endo-dark mt-1 leading-none">Be Harmony</p>
-        <p class="mt-2 text-[9px] sm:text-[10px] tracking-[0.3em] font-semibold text-endo-muted uppercase">Gabinet terapii ciała</p>
-      </div>
-    </ng-template>
-
     <ng-template #emsRow let-row>
       <div class="rounded-xl border px-4 sm:px-5 py-2.5 flex items-center justify-between gap-3 sm:grid sm:grid-cols-[1fr_auto_1fr] sm:gap-4"
            [ngClass]="row.highlight ? 'bg-[#FDF0E2] border-[#EBCFB0]' : 'bg-white/60 border-endo-line'">

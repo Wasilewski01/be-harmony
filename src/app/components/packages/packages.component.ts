@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
@@ -32,15 +32,15 @@ interface Package {
     <section id="pakiety" appScrollReveal class="relative overflow-hidden bg-[#f8f3ec] px-4 sm:px-8 pt-12 pb-10">
       <div class="relative max-w-[1420px] mx-auto">
         <div class="text-center">
-          <h2 class="font-cormorant font-medium text-[34px] sm:text-[40px] leading-tight text-[#293b2e]">
+          <h2 *ngIf="!minimal" class="font-cormorant font-medium text-[34px] sm:text-[40px] leading-tight text-[#293b2e]">
             Be Harmony <span class="text-[#a9533a]">Pakiety</span>
           </h2>
-          <p class="font-cormorant uppercase leading-none mt-4 text-[clamp(2.5rem,9vw,3.75rem)]">
+          <p class="font-cormorant uppercase leading-none text-[clamp(2.5rem,9vw,3.75rem)]" [class.mt-4]="!minimal">
             <span class="text-[#293b2e]">EMS</span>
             <span class="text-[#293b2e] inline-block -translate-y-[0.2em] text-[0.85em] mx-1 sm:mx-3">+</span><br class="sm:hidden">
             <span class="text-[#a9533a]">Endoterapia</span>
           </p>
-          <p class="font-manrope mt-5 text-[11px] sm:text-xs font-semibold tracking-[0.18em] text-[#343c30]">
+          <p *ngIf="!minimal" class="font-manrope mt-5 text-[11px] sm:text-xs font-semibold tracking-[0.18em] text-[#343c30]">
             Skuteczne duo dla sylwetki, którą widać i czuć.
           </p>
         </div>
@@ -75,7 +75,7 @@ interface Package {
                     Pakiet {{ pkg.size }}
                   </h3>
                 </div>
-                <div class="pt-1 flex-shrink-0">
+                <div *ngIf="!minimal" class="pt-1 flex-shrink-0">
                   <div class="w-12 h-12 rounded-full border flex items-center justify-center" [ngClass]="theme(pkg).mono">
                     <span class="font-cormorant text-2xl leading-8">{{ pkg.size }}</span>
                   </div>
@@ -137,6 +137,8 @@ interface Package {
   styles: []
 })
 export class PackagesComponent {
+  @Input() minimal = false;
+
   constructor(private router: Router) {}
 
   packages: Package[] = [
