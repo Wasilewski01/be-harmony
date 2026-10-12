@@ -35,7 +35,8 @@ interface Package {
           <h2 *ngIf="!minimal" class="font-cormorant font-medium text-[34px] sm:text-[40px] leading-tight text-[#293b2e]">
             Be Harmony <span class="text-[#a9533a]">Pakiety</span>
           </h2>
-          <p class="font-cormorant uppercase leading-none text-[clamp(2.5rem,9vw,3.75rem)]" [class.mt-4]="!minimal">
+          <p *ngIf="minimal" class="font-cormorant font-medium text-[34px] sm:text-[40px] leading-tight text-[#a9533a]">PAKIETY</p>
+          <p class="font-cormorant uppercase leading-none mt-4 text-[clamp(2.5rem,9vw,3.75rem)]">
             <span class="text-[#293b2e]">EMS</span>
             <span class="text-[#293b2e] inline-block -translate-y-[0.2em] text-[0.85em] mx-1 sm:mx-3">+</span><br class="sm:hidden">
             <span class="text-[#a9533a]">Endoterapia</span>

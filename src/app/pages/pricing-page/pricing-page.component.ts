@@ -105,11 +105,9 @@ interface PricingItem {
 
             <!-- CENNIK -->
             <div class="mt-7 sm:mt-6 rounded-2xl sm:rounded-3xl bg-endo-dark overflow-hidden">
-              <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 px-4 sm:px-6 pt-3.5 pb-3 sm:pt-3 sm:pb-2.5">
-                <h3 class="font-display uppercase text-endo-cream text-[1.35rem] sm:text-2xl leading-tight whitespace-nowrap">Cennik Endoterapia</h3>
-                <span class="flex-1 h-px bg-endo-cream/50 hidden sm:block"></span>
-                <span class="text-[9px] tracking-[0.15em] uppercase text-endo-cream/80 sm:text-endo-cream/90 sm:text-right leading-snug">
-                  Zakres dobieramy<br class="hidden sm:inline"> do Twoich potrzeb
+              <div class="px-4 sm:px-6 pt-3.5 pb-3 sm:pt-3.5 sm:pb-3 text-center">
+                <span class="text-xs sm:text-sm font-semibold tracking-[0.15em] uppercase text-endo-cream/90 leading-snug">
+                  Zakres dobieramy do Twoich potrzeb
                 </span>
               </div>
               <div class="bg-endo-paper rounded-2xl sm:rounded-3xl">
