@@ -163,7 +163,7 @@ interface PricingItem {
                   </ul>
                 </div>
                 </div>
-                <p class="px-4 md:px-5 pb-4 text-[11px] italic text-endo-muted/80">
+                <p class="px-4 md:px-5 pb-4 text-[11px] italic font-bold text-endo-muted/80">
                   *Do każdego zakresu (SOLO, DUO, MULTI) do wyboru jedna z powyższych opcji
                 </p>
               </div>
