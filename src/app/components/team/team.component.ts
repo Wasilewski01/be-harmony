@@ -27,7 +27,7 @@ interface TeamMember {
           </p>
         </div>
 
-        <div class="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
+        <div class="flex flex-col items-center gap-20 max-w-5xl mx-auto">
           <div *ngFor="let member of teamMembers; let i = index"
                appScrollReveal [revealDelay]="i * 0.15"
                class="group text-center">
@@ -71,6 +71,18 @@ export class TeamComponent {
                 'Od ponad 10 lat łączę terapię z treningiem. Pomagam w pracy nad bólem, napięciem i codziennym funkcjonowaniem.',
                 'Ukończyłam liczne szkolenia z fizjoterapii, diagnostyki, terapii manualnej i alternatywnych metod pracy z ciałem. Ciągle rozwijam swoje umiejętności, aby sesje były skuteczne i dopasowane do indywidualnych potrzeb.',
                 'W mojej pracy stawiam na całościowe podejście – nie skupiam się tylko na objawach, ale szukam przyczyny problemu i wspieram organizm w odzyskaniu równowagi.',
+            ],
+        },
+        {
+            name: 'mgr Natalia Puchalska',
+            role: 'Fizjoterapeutka | Terapia dzieci i dorosłych',
+            bio: 'Fizjoterapeutka z pasją do wspierania rozwoju dzieci i holistycznego podejścia do ciała.',
+            photo: 'assets/img/natalia_puchalska.jpg',
+            storySections: [
+                'Jestem absolwentką Uniwersytetu Medycznego w Poznaniu, magistrem fizjoterapii. Specjalizuję się w pracy z dziećmi, w tym w terapii integracji sensorycznej (SI) oraz metodzie INPP.',
+                'W swojej pracy wspieram rozwój motoryczny dzieci, pomagając w trudnościach związanych z koordynacją, równowagą, koncentracją i przetwarzaniem bodźców sensorycznych. Każde dziecko traktuję indywidualnie, patrząc całościowo na jego potrzeby i rozwój.',
+                'Zajmuję się również terapią ciała oraz masażami, dobierając techniki do indywidualnych potrzeb, aby wspierać regenerację, rozluźnienie i dobre samopoczucie.',
+                'Wykonuję także wyjątkowe terapie twarzy – Kobido Premium, masaż transbukalny oraz kompleksową terapię łączącą obie te metody, dbając zarówno o estetykę, jak i głęboki relaks.',
             ],
         },
     ];
