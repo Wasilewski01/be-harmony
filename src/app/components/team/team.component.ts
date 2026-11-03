@@ -74,7 +74,7 @@ export class TeamComponent {
             ],
         },
         {
-            name: 'Natalia Puchalska',
+            name: 'Natalia Merchant-Puchalska',
             role: 'Fizjoterapeutka | Terapia dzieci i dorosłych',
             bio: 'Fizjoterapeutka z pasją do wspierania rozwoju dzieci i holistycznego podejścia do ciała.',
             photo: 'assets/img/natalia_puchalska.jpg',
