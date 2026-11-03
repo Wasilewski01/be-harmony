@@ -65,10 +65,10 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive'
 })
 export class AboutComponent {
     tags: { label: string; variant: string }[] = [
-        { label: 'Terapia ciała', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
-        { label: 'Masaż', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
+        { label: 'Terapie', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
+        { label: 'Masaże', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
         { label: 'Trening EMS', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
-        { label: 'Trening Funkcjonalny', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
+        { label: 'Endoterapia', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
         { label: 'Holistyczne podejście', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
         { label: 'Indywidualny plan', variant: 'bg-terracotta/15 text-terracotta-700 border-terracotta/30' },
     ];
