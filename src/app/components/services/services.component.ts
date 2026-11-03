@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
+type ServiceCategory = 'terapie' | 'masaze';
+
 interface Service {
   name: string;
   description: string;
@@ -13,6 +15,7 @@ interface Service {
   icon: string;
   isEms?: boolean;
   isEndo?: boolean;
+  category?: ServiceCategory;
   subItems?: { name: string; price: string; description?: string }[];
   regularTherapy?: string[];
   forWhom?: string;
@@ -147,43 +150,66 @@ interface Service {
           </div>
         </div>
 
-        <!-- Service Cards Grid -->
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div *ngFor="let service of services; let i = index"
-               appScrollReveal [revealDelay]="i * 0.1"
-               (click)="openModal(service)"
-               class="group cursor-pointer bg-cream-100 rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-terracotta hover:ring-2 hover:ring-terracotta/20 transition-all duration-300 border border-terracotta/10 hover:border-terracotta/30 hover:-translate-y-1.5 active:scale-[0.98] active:shadow-md">
-            
-            <div class="w-14 h-14 rounded-xl bg-terracotta/10 flex items-center justify-center mb-5 group-hover:bg-terracotta/20 group-hover:scale-110 transition-all duration-300">
-              <span class="text-2xl" [innerHTML]="service.icon"></span>
-            </div>
-
-            <h3 class="font-display text-xl font-semibold text-gray-900 mb-3 group-hover:text-terracotta-700 transition-colors">
-              {{ service.name }}
-            </h3>
-            
-            <p class="text-gray-600 text-sm leading-relaxed mb-5">
-              {{ service.description }}
-            </p>
-
-            <!-- Sub items for massages -->
-            <div *ngIf="service.subItems" class="space-y-2 mb-5">
-              <div *ngFor="let sub of service.subItems"
-                   class="flex justify-between items-center py-1.5 border-b border-terracotta/10 last:border-0">
-                <span class="text-sm text-gray-600">{{ sub.name }}</span>
-                <span class="text-sm font-semibold text-terracotta">{{ sub.price }}</span>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between mt-auto">
-              <div *ngIf="!service.subItems">
-                <span class="text-2xl font-bold text-terracotta">{{ service.price }}</span>
-                <span *ngIf="service.price !== 'Do ustalenia'" class="text-gray-400 text-sm ml-1">zł</span>
-              </div>
-              <span class="text-xs text-terracotta-600 font-medium flex items-center gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
-                Szczegóły
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <!-- Kategorie usług: Terapie / Masaże -->
+        <div class="space-y-5">
+          <div *ngFor="let group of serviceGroups; let gi = index"
+               appScrollReveal [revealDelay]="gi * 0.1"
+               class="rounded-3xl border border-terracotta/15 bg-cream-100 overflow-hidden">
+            <button type="button" (click)="toggleGroup(group.key)"
+                    [attr.aria-expanded]="openGroups[group.key]"
+                    [attr.aria-controls]="'uslugi-' + group.key"
+                    class="w-full flex items-center gap-4 sm:gap-5 px-5 sm:px-8 py-5 sm:py-6 text-left hover:bg-terracotta/5 transition-colors">
+              <span class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-terracotta/10 flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">{{ group.icon }}</span>
               </span>
+              <span class="flex-1 min-w-0">
+                <span class="block font-display text-2xl sm:text-3xl font-semibold text-gray-900">{{ group.label }}</span>
+                <span class="block text-sm text-gray-500 mt-0.5">{{ group.desc }} · {{ countLabel(servicesIn(group.key).length) }}</span>
+              </span>
+              <span class="w-10 h-10 rounded-full border border-terracotta/30 flex items-center justify-center flex-shrink-0 transition-transform duration-300"
+                    [class.rotate-180]="openGroups[group.key]">
+                <svg class="w-5 h-5 text-terracotta" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              </span>
+            </button>
+
+            <div *ngIf="openGroups[group.key]" [id]="'uslugi-' + group.key"
+                 class="px-4 sm:px-8 pb-6 sm:pb-8 pt-1 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 animate-fade-in">
+              <div *ngFor="let service of servicesIn(group.key)"
+                     (click)="openModal(service)"
+                     class="group cursor-pointer bg-white rounded-2xl p-6 md:p-8 shadow-sm hover:shadow-terracotta hover:ring-2 hover:ring-terracotta/20 transition-all duration-300 border border-terracotta/10 hover:border-terracotta/30 hover:-translate-y-1.5 active:scale-[0.98] active:shadow-md">
+                  <div class="w-14 h-14 rounded-xl bg-terracotta/10 flex items-center justify-center mb-5 group-hover:bg-terracotta/20 group-hover:scale-110 transition-all duration-300">
+                    <span class="text-2xl" [innerHTML]="service.icon"></span>
+                  </div>
+
+                  <h3 class="font-display text-xl font-semibold text-gray-900 mb-3 group-hover:text-terracotta-700 transition-colors">
+                    {{ service.name }}
+                  </h3>
+                  <p class="text-gray-600 text-sm leading-relaxed mb-5">
+                    {{ service.description }}
+                  </p>
+
+                  <!-- Sub items for massages -->
+                  <div *ngIf="service.subItems" class="space-y-2 mb-5">
+                    <div *ngFor="let sub of service.subItems"
+                         class="flex justify-between items-center py-1.5 border-b border-terracotta/10 last:border-0">
+                      <span class="text-sm text-gray-600">{{ sub.name }}</span>
+                      <span class="text-sm font-semibold text-terracotta">{{ sub.price }}</span>
+                    </div>
+                  </div>
+
+                  <div class="flex items-center justify-between mt-auto">
+                    <div *ngIf="!service.subItems">
+                      <span class="text-2xl font-bold text-terracotta">{{ service.price }}</span>
+                      <span *ngIf="service.price !== 'Do ustalenia'" class="text-gray-400 text-sm ml-1">zł</span>
+                    </div>
+                    <span class="text-xs text-terracotta-600 font-medium flex items-center gap-1 ml-auto opacity-0 group-hover:opacity-100 transition-opacity">
+                      Szczegóły
+                      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </span>
+                  </div>
+              </div>
             </div>
           </div>
         </div>
@@ -452,6 +478,7 @@ export class ServicesComponent {
   services: Service[] = [
     {
       name: 'Terapia ciała',
+      category: 'terapie',
       description: 'Kompleksowa praca manualna, narzędziowa i ruchowa ukierunkowana na poprawę funkcjonowania organizmu.',
       detailedDescription: 'To kompleksowa praca manualna, narzędziowa i ruchowa ukierunkowana na poprawę funkcjonowania całego organizmu. Jej celem jest przywrócenie równowagi w ciele, poprawa mobilności, oddechu i swobody ruchu. To spotkanie, podczas którego pracujemy nad problemami nagromadzonymi często przez lata — zarówno na poziomie fizycznym, jak i emocjonalnym.',
       regularTherapy: [
@@ -470,6 +497,7 @@ export class ServicesComponent {
     },
     {
       name: 'Masaż indywidualnie dobrany',
+      category: 'masaze',
       description: 'Masaż indywidualnie dopasowany do Twoich potrzeb i oczekiwań.',
       detailedDescription: 'Masaż łączy różne techniki — głęboki, powięziowy, relaksacyjny i elementy pracy manualnej — dopasowane do aktualnych potrzeb ciała i oczekiwań klienta. Każda sesja rozpoczyna się krótką rozmową, w której rozmawiamy o tym, co czujesz i czego potrzebujesz. Dzięki temu masaż jest w pełni indywidualny — nie bazuje na wyuczonym schemacie ani jednym rodzaju technik powtarzanych mechanicznie. To ręce terapeuty i ciało klienta prowadzą masaż — dobierając techniki, siłę nacisku i tempo, aby ciało i umysł skorzystały jak najbardziej. Sesja może być zarówno głęboka i intensywna, jak i delikatna i relaksacyjna, przynosząc rozluźnienie, regenerację i lekkość w ruchu.',
       benefits: [
@@ -486,6 +514,7 @@ export class ServicesComponent {
     },
     {
       name: 'Trening Funkcjonalny',
+      category: 'terapie',
       description: 'Indywidualnie dobrany program ćwiczeń poprawiający siłę, koordynację i mobilność.',
       detailedDescription: 'Trening funkcjonalny w Be Harmony to indywidualnie dobrany program ćwiczeń, który poprawia siłę, koordynację, mobilność i ogólną sprawność w codziennym funkcjonowaniu. Ta forma aktywności oparta jest na naturalnych wzorcach ruchowych, skutecznie wzmacnia ciało, przygotowuje je do codziennych wyzwań i zmniejsza ryzyko kontuzji. Ćwiczenia angażują całe ciało, poprawiają stabilizację i uczą prawidłowej pracy mięśni podczas ruchu, co przekłada się na wszechstronne efekty w życiu codziennym i sporcie.',
       benefitsHeading: 'Korzyści treningu funkcjonalnego:',
@@ -510,6 +539,7 @@ export class ServicesComponent {
     },
     {
       name: 'Terapia po zabiegach medycyny estetycznej i chirurgii plastycznej',
+      category: 'terapie',
       description: 'Specjalistyczna terapia wspierająca regenerację po zabiegach estetycznych.',
       detailedDescription: 'Specjalistyczna terapia zaprojektowana z myślą o pacjentach po zabiegach medycyny estetycznej (liposukcja, lipotransfer, powiększanie piersi, plastyka brzucha i inne) oraz operacjach chirurgii plastycznej. Sesja obejmuje drenaż limfatyczny, pracę z tkankami, redukcję obrzęków i przyspieszenie gojenia. Terapia pomaga zminimalizować blizny, zmniejszyć dyskomfort pooperacyjny i przyspieszyć powrót do pełnej sprawności. Każdy zabieg jest delikatny i dostosowany do etapu rekonwalescencji.',
       benefits: [
@@ -526,6 +556,7 @@ export class ServicesComponent {
     },
     {
       name: 'Terapia wisceralna',
+      category: 'terapie',
       description: 'Delikatna, manualna praca w obrębie jamy brzusznej i klatki piersiowej.',
       detailedDescription: 'Terapia wisceralna to delikatna, manualna praca w obrębie jamy brzusznej i klatki piersiowej. Jej celem jest przywrócenie naturalnej ruchomości narządów wewnętrznych oraz tkanek, które je otaczają. Dzięki temu możliwe jest zmniejszenie napięć, poprawa krążenia i funkcjonowania układu trawiennego, a także wpływ na postawę i ogólne samopoczucie.',
       benefitsHeading: 'Korzyści terapii:',
@@ -543,6 +574,7 @@ export class ServicesComponent {
     },
     {
       name: 'HTR — Holistyczna Terapia Relaksacyjna',
+      category: 'terapie',
       description: 'Autorska metoda wspierająca regenerację poprzez głęboki relaks i harmonizację układu nerwowego.',
       detailedDescription: 'HTR to autorska metoda wspierająca regenerację organizmu poprzez głęboki relaks i harmonizację układu nerwowego. To nie tylko chwila odprężenia — to intensywna i świadoma praca z układem nerwowym, która uruchamia naturalne mechanizmy samonaprawy ciała. Dzięki temu możliwe jest obniżenie poziomu stresu, napięcia i lęku, redukcja kortyzolu oraz poprawa nastroju i równowagi emocjonalnej. Regularne sesje wspierają też odzyskiwanie energii i wewnętrznej stabilności.',
       combinesSection: {
@@ -568,7 +600,93 @@ export class ServicesComponent {
       price: '380',
       icon: '🌿',
     },
+    {
+      name: 'Konsultacja i ocena funkcjonalna dziecka',
+      category: 'terapie',
+      description: 'Pierwsze spotkanie i ocena rozwoju ruchowego dziecka, na podstawie której dobieramy dalszą terapię.',
+      detailedDescription: 'Spotkanie, podczas którego rozmawiamy o potrzebach dziecka i oceniamy jego rozwój ruchowy — postawę, koordynację, równowagę oraz sposób poruszania się. Na tej podstawie dobieramy dalszą terapię i ćwiczenia dopasowane do wieku oraz potrzeb dziecka.',
+      benefits: [],
+      duration: '60 min',
+      price: '250',
+      icon: '📋',
+    },
+    {
+      name: 'Terapia ciała i trening funkcjonalny dzieci',
+      category: 'terapie',
+      description: 'Zajęcia łączące terapię manualną i ćwiczenia funkcjonalne, wspierające rozwój motoryczny dziecka.',
+      detailedDescription: 'Indywidualnie dobrane zajęcia łączące techniki terapii manualnej, ćwiczenia funkcjonalne oraz elementy wspierające rozwój motoryczny dziecka. Praca ukierunkowana jest na poprawę mobilności, stabilizacji, koordynacji, równowagi i świadomości własnego ciała, z uwzględnieniem wieku oraz potrzeb dziecka.',
+      forWhom: 'Dla dzieci potrzebujących wsparcia w rozwoju ruchowym, poprawie postawy, kontroli ciała i codziennym funkcjonowaniu.',
+      benefits: [],
+      duration: '45 min',
+      price: '180',
+      icon: '🧸',
+    },
+    {
+      name: 'Relaksacyjny masaż całego ciała z aromaterapią',
+      category: 'masaze',
+      description: 'Płynne techniki masażu z aromaterapią i kojącą muzyką dla głębokiego odprężenia.',
+      detailedDescription: 'Wyjątkowy masaż całego ciała, który pozwala oderwać się od codziennego pośpiechu i zanurzyć w głębokim odprężeniu. Spokojne, płynne techniki masażu w połączeniu z aromaterapią, kojącą muzyką i przyjemną atmosferą pomagają rozluźnić napięte mięśnie, wyciszyć umysł i odzyskać wewnętrzną równowagę.',
+      forWhom: 'Dla osób potrzebujących relaksu, regeneracji i chwili wytchnienia od codziennego stresu.',
+      benefits: [],
+      duration: '90 min',
+      price: '300',
+      icon: '🕯️',
+    },
+    {
+      name: 'Kobido Premium — japoński rytuał liftingujący',
+      category: 'masaze',
+      description: 'Japoński masaż twarzy, szyi i dekoltu z pielęgnacją kosmetykami Thalgo.',
+      detailedDescription: 'Wyjątkowy masaż twarzy łączący tradycyjne japońskie techniki z intensywną pracą na mięśniach twarzy, szyi i dekoltu. Pomaga rozluźnić napięcia, pobudzić mikrokrążenie oraz poprawić wygląd i jędrność skóry. Całość dopełnia luksusowa pielęgnacja na francuskich kosmetykach Thalgo.',
+      forWhom: 'Dla osób pragnących naturalnego efektu liftingu, poprawy kondycji skóry i głębokiego odprężenia.',
+      benefits: [],
+      duration: '75 min',
+      price: '260',
+      icon: '🌸',
+    },
+    {
+      name: 'Masaż transbukalny — głębokie rozluźnienie mięśni twarzy',
+      category: 'masaze',
+      description: 'Masaż od zewnątrz i od wewnątrz jamy ustnej, rozluźniający mięśnie policzków i żuchwy.',
+      detailedDescription: 'Specjalistyczny masaż wykonywany zarówno od zewnątrz, jak i od wewnątrz jamy ustnej. Pozwala na precyzyjną pracę z głębiej położonymi mięśniami policzków i żuchwy, pomagając zmniejszyć napięcia mięśniowe, poprawić komfort i naturalny wygląd twarzy.',
+      forWhom: 'Dla osób z bruksizmem, zaciskaniem zębów i napięciami w obrębie żuchwy oraz poszukujących głębokiego rozluźnienia i naturalnego odświeżenia twarzy.',
+      benefits: [],
+      duration: '45 min',
+      price: '200',
+      icon: '😌',
+    },
+    {
+      name: 'Kobido Premium + masaż transbukalny — kompleksowy rytuał twarzy',
+      category: 'masaze',
+      description: 'Połączenie Kobido i masażu transbukalnego z profesjonalną pielęgnacją Thalgo.',
+      detailedDescription: 'Połączenie dwóch wyjątkowych technik, które wzajemnie się uzupełniają. Kobido pobudza mikrokrążenie i działa liftingująco, a masaż transbukalny pozwala na głębszą pracę z mięśniami twarzy i żuchwy. Rytuał dopełnia profesjonalna pielęgnacja kosmetykami Thalgo.',
+      forWhom: 'Dla osób oczekujących kompleksowej pielęgnacji, intensywnego rozluźnienia napięć mięśniowych i naturalnego odświeżenia wyglądu twarzy.',
+      benefits: [],
+      duration: '100 min',
+      price: '360',
+      icon: '💎',
+    },
   ];
+
+  serviceGroups: { key: ServiceCategory; label: string; desc: string; icon: string }[] = [
+    { key: 'terapie', label: 'Terapie', desc: 'Praca z ciałem, terapia i ruch', icon: '🧘' },
+    { key: 'masaze', label: 'Masaże', desc: 'Masaże ciała i rytuały twarzy', icon: '💆' },
+  ];
+
+  openGroups: Record<ServiceCategory, boolean> = { terapie: false, masaze: false };
+
+  toggleGroup(key: ServiceCategory) {
+    this.openGroups[key] = !this.openGroups[key];
+  }
+
+  servicesIn(key: ServiceCategory) {
+    return this.services.filter(s => s.category === key);
+  }
+
+  countLabel(n: number) {
+    if (n === 1) return '1 usługa';
+    const d = n % 10, dd = n % 100;
+    return `${n} ${d >= 2 && d <= 4 && (dd < 12 || dd > 14) ? 'usługi' : 'usług'}`;
+  }
 
   openModal(service: Service) {
     this.selectedService = service;

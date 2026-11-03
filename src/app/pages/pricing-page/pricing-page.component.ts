@@ -23,8 +23,6 @@ interface PricingItem {
   price: string;
   note?: string;
   badge?: string;
-  details?: string;
-  forWhom?: string;
 }
 
 @Component({
@@ -301,8 +299,7 @@ interface PricingItem {
               <!-- Pozycje -->
               <div class="flex flex-col gap-2.5">
                 <div *ngFor="let item of category.items"
-                     class="flex gap-4 px-4 sm:px-5 py-4 rounded-xl border border-[#eadbc8] bg-white"
-                     [ngClass]="item.details ? 'items-start' : 'items-center'">
+                     class="flex items-center gap-4 px-4 sm:px-5 py-4 rounded-xl border border-[#eadbc8] bg-white">
                   <div class="flex-1 min-w-0">
                     <span *ngIf="item.badge" class="mb-2 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-[#eadfc5]">
                       <img src="assets/img/pakiety/check-oszczedzasz.svg" alt="" width="12" height="12" class="w-4 h-4">
@@ -310,11 +307,6 @@ interface PricingItem {
                     </span>
                     <p *ngIf="item.name" class="text-[13px] sm:text-sm leading-5 font-semibold text-[#293b2e]">{{ item.name }}</p>
                     <p *ngIf="item.description" class="pt-1 text-[11px] sm:text-xs leading-[18px] text-[#91725f]">{{ item.description }}</p>
-                    <p *ngIf="item.details" class="pt-2 text-xs sm:text-[13px] leading-5 text-[#6b655c]">{{ item.details }}</p>
-                    <div *ngIf="item.forWhom" class="mt-3 pl-3 border-l-2 border-[#a9533a]/40">
-                      <p class="text-[10px] leading-[15px] font-semibold tracking-[1.2px] uppercase text-[#593b2d]">Dla kogo?</p>
-                      <p class="pt-0.5 text-xs sm:text-[13px] leading-5 text-[#6b655c]">{{ item.forWhom }}</p>
-                    </div>
                   </div>
                   <p class="flex-shrink-0 whitespace-nowrap text-[#293b2e]">
                     <span class="font-cormorant text-[28px] sm:text-[30px] leading-8 font-semibold">{{ item.price }}</span>
@@ -463,9 +455,7 @@ export class PricingPageComponent {
       icon: '💆',
       items: [
         { name: 'Masaż indywidualnie dopasowany', description: '50 min', price: '180' },
-        { name: 'Relaksacyjny masaż całego ciała z aromaterapią', description: '90 min', price: '300',
-          details: 'Wyjątkowy masaż całego ciała, który pozwala oderwać się od codziennego pośpiechu i zanurzyć w głębokim odprężeniu. Spokojne, płynne techniki masażu w połączeniu z aromaterapią, kojącą muzyką i przyjemną atmosferą pomagają rozluźnić napięte mięśnie, wyciszyć umysł i odzyskać wewnętrzną równowagę.',
-          forWhom: 'Dla osób potrzebujących relaksu, regeneracji i chwili wytchnienia od codziennego stresu.' },
+        { name: 'Relaksacyjny masaż całego ciała z aromaterapią', description: '90 min — płynne techniki masażu, aromaterapia i kojąca muzyka dla głębokiego odprężenia', price: '300' },
       ]
     },
     {
@@ -475,15 +465,9 @@ export class PricingPageComponent {
       eyebrow: 'Rytuały twarzy',
       icon: '🌸',
       items: [
-        { name: 'Kobido Premium — japoński rytuał liftingujący', description: '75 min', price: '260',
-          details: 'Wyjątkowy masaż twarzy łączący tradycyjne japońskie techniki z intensywną pracą na mięśniach twarzy, szyi i dekoltu. Pomaga rozluźnić napięcia, pobudzić mikrokrążenie oraz poprawić wygląd i jędrność skóry. Całość dopełnia luksusowa pielęgnacja na francuskich kosmetykach Thalgo.',
-          forWhom: 'Dla osób pragnących naturalnego efektu liftingu, poprawy kondycji skóry i głębokiego odprężenia.' },
-        { name: 'Masaż transbukalny — głębokie rozluźnienie mięśni twarzy', description: '45 min', price: '200',
-          details: 'Specjalistyczny masaż wykonywany zarówno od zewnątrz, jak i od wewnątrz jamy ustnej. Pozwala na precyzyjną pracę z głębiej położonymi mięśniami policzków i żuchwy, pomagając zmniejszyć napięcia mięśniowe, poprawić komfort i naturalny wygląd twarzy.',
-          forWhom: 'Dla osób z bruksizmem, zaciskaniem zębów i napięciami w obrębie żuchwy oraz poszukujących głębokiego rozluźnienia i naturalnego odświeżenia twarzy.' },
-        { name: 'Kobido Premium + masaż transbukalny — kompleksowy rytuał twarzy', description: '100 min', price: '360',
-          details: 'Połączenie dwóch wyjątkowych technik, które wzajemnie się uzupełniają. Kobido pobudza mikrokrążenie i działa liftingująco, a masaż transbukalny pozwala na głębszą pracę z mięśniami twarzy i żuchwy. Rytuał dopełnia profesjonalna pielęgnacja kosmetykami Thalgo.',
-          forWhom: 'Dla osób oczekujących kompleksowej pielęgnacji, intensywnego rozluźnienia napięć mięśniowych i naturalnego odświeżenia wyglądu twarzy.' },
+        { name: 'Kobido Premium — japoński rytuał liftingujący', description: '75 min — masaż twarzy, szyi i dekoltu z pielęgnacją kosmetykami Thalgo', price: '260' },
+        { name: 'Masaż transbukalny', description: '45 min — głębokie rozluźnienie mięśni twarzy i żuchwy', price: '200' },
+        { name: 'Kobido Premium + masaż transbukalny', description: '100 min — kompleksowy rytuał twarzy z pielęgnacją kosmetykami Thalgo', price: '360' },
       ]
     },
     {
@@ -504,9 +488,7 @@ export class PricingPageComponent {
       icon: '🧸',
       items: [
         { name: 'Konsultacja i ocena funkcjonalna dziecka', description: '60 min', price: '250' },
-        { name: 'Terapia ciała i trening funkcjonalny dzieci', description: '45 min', price: '180',
-          details: 'Indywidualnie dobrane zajęcia łączące techniki terapii manualnej, ćwiczenia funkcjonalne oraz elementy wspierające rozwój motoryczny dziecka. Praca ukierunkowana jest na poprawę mobilności, stabilizacji, koordynacji, równowagi i świadomości własnego ciała, z uwzględnieniem wieku oraz potrzeb dziecka.',
-          forWhom: 'Dla dzieci potrzebujących wsparcia w rozwoju ruchowym, poprawie postawy, kontroli ciała i codziennym funkcjonowaniu.' },
+        { name: 'Terapia ciała i trening funkcjonalny dzieci', description: '45 min — terapia manualna i ćwiczenia wspierające rozwój motoryczny, koordynację i równowagę', price: '180' },
       ]
     },
   ];
