@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal.directive';
 
-type ServiceCategory = 'terapie' | 'masaze';
+type ServiceCategory = 'terapie' | 'dzieci' | 'masaze';
 
 interface Service {
   name: string;
@@ -538,23 +538,6 @@ export class ServicesComponent {
       icon: '💪',
     },
     {
-      name: 'Terapia po zabiegach medycyny estetycznej i chirurgii plastycznej',
-      category: 'terapie',
-      description: 'Specjalistyczna terapia wspierająca regenerację po zabiegach estetycznych.',
-      detailedDescription: 'Specjalistyczna terapia zaprojektowana z myślą o pacjentach po zabiegach medycyny estetycznej (liposukcja, lipotransfer, powiększanie piersi, plastyka brzucha i inne) oraz operacjach chirurgii plastycznej. Sesja obejmuje drenaż limfatyczny, pracę z tkankami, redukcję obrzęków i przyspieszenie gojenia. Terapia pomaga zminimalizować blizny, zmniejszyć dyskomfort pooperacyjny i przyspieszyć powrót do pełnej sprawności. Każdy zabieg jest delikatny i dostosowany do etapu rekonwalescencji.',
-      benefits: [
-        'Przyspieszenie regeneracji po zabiegu',
-        'Redukcja obrzęków pooperacyjnych',
-        'Drenaż limfatyczny wspierający gojenie',
-        'Minimalizacja blizn pooperacyjnych',
-        'Zmniejszenie dyskomfortu i bólu',
-        'Poprawa elastyczności skóry w miejscu zabiegu',
-      ],
-      duration: '50 min',
-      price: '200',
-      icon: '✨',
-    },
-    {
       name: 'Terapia wisceralna',
       category: 'terapie',
       description: 'Delikatna, manualna praca w obrębie jamy brzusznej i klatki piersiowej.',
@@ -601,8 +584,25 @@ export class ServicesComponent {
       icon: '🌿',
     },
     {
-      name: 'Konsultacja i ocena funkcjonalna dziecka',
+      name: 'Terapia po zabiegach medycyny estetycznej i chirurgii plastycznej',
       category: 'terapie',
+      description: 'Specjalistyczna terapia wspierająca regenerację po zabiegach estetycznych.',
+      detailedDescription: 'Specjalistyczna terapia zaprojektowana z myślą o pacjentach po zabiegach medycyny estetycznej (liposukcja, lipotransfer, powiększanie piersi, plastyka brzucha i inne) oraz operacjach chirurgii plastycznej. Sesja obejmuje drenaż limfatyczny, pracę z tkankami, redukcję obrzęków i przyspieszenie gojenia. Terapia pomaga zminimalizować blizny, zmniejszyć dyskomfort pooperacyjny i przyspieszyć powrót do pełnej sprawności. Każdy zabieg jest delikatny i dostosowany do etapu rekonwalescencji.',
+      benefits: [
+        'Przyspieszenie regeneracji po zabiegu',
+        'Redukcja obrzęków pooperacyjnych',
+        'Drenaż limfatyczny wspierający gojenie',
+        'Minimalizacja blizn pooperacyjnych',
+        'Zmniejszenie dyskomfortu i bólu',
+        'Poprawa elastyczności skóry w miejscu zabiegu',
+      ],
+      duration: '50 min',
+      price: '200',
+      icon: '✨',
+    },
+    {
+      name: 'Konsultacja i ocena funkcjonalna dziecka',
+      category: 'dzieci',
       description: 'Pierwsze spotkanie i ocena rozwoju ruchowego dziecka, na podstawie której dobieramy dalszą terapię.',
       detailedDescription: 'Spotkanie, podczas którego rozmawiamy o potrzebach dziecka i oceniamy jego rozwój ruchowy — postawę, koordynację, równowagę oraz sposób poruszania się. Na tej podstawie dobieramy dalszą terapię i ćwiczenia dopasowane do wieku oraz potrzeb dziecka.',
       benefits: [],
@@ -612,7 +612,7 @@ export class ServicesComponent {
     },
     {
       name: 'Terapia ciała i trening funkcjonalny dzieci',
-      category: 'terapie',
+      category: 'dzieci',
       description: 'Zajęcia łączące terapię manualną i ćwiczenia funkcjonalne, wspierające rozwój motoryczny dziecka.',
       detailedDescription: 'Indywidualnie dobrane zajęcia łączące techniki terapii manualnej, ćwiczenia funkcjonalne oraz elementy wspierające rozwój motoryczny dziecka. Praca ukierunkowana jest na poprawę mobilności, stabilizacji, koordynacji, równowagi i świadomości własnego ciała, z uwzględnieniem wieku oraz potrzeb dziecka.',
       forWhom: 'Dla dzieci potrzebujących wsparcia w rozwoju ruchowym, poprawie postawy, kontroli ciała i codziennym funkcjonowaniu.',
@@ -669,10 +669,11 @@ export class ServicesComponent {
 
   serviceGroups: { key: ServiceCategory; label: string; desc: string; icon: string }[] = [
     { key: 'terapie', label: 'Terapie', desc: 'Praca z ciałem, terapia i ruch', icon: '🧘' },
+    { key: 'dzieci', label: 'Terapia dzieci', desc: 'Wsparcie rozwoju ruchowego dziecka', icon: '🧸' },
     { key: 'masaze', label: 'Masaże', desc: 'Masaże ciała i rytuały twarzy', icon: '💆' },
   ];
 
-  openGroups: Record<ServiceCategory, boolean> = { terapie: false, masaze: false };
+  openGroups: Record<ServiceCategory, boolean> = { terapie: false, dzieci: false, masaze: false };
 
   toggleGroup(key: ServiceCategory) {
     this.openGroups[key] = !this.openGroups[key];

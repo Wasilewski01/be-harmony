@@ -455,7 +455,7 @@ export class PricingPageComponent {
       icon: '💆',
       items: [
         { name: 'Masaż indywidualnie dopasowany', description: '50 min', price: '180' },
-        { name: 'Relaksacyjny masaż całego ciała z aromaterapią', description: '90 min — płynne techniki masażu, aromaterapia i kojąca muzyka dla głębokiego odprężenia', price: '300' },
+        { name: 'Relaksacyjny masaż całego ciała z aromaterapią', description: '90 min — głębokie odprężenie, rozluźnienie napięć i ukojenie zmysłów w otoczeniu 100% naturalnych olejków eterycznych', price: '300' },
       ]
     },
     {
@@ -465,9 +465,9 @@ export class PricingPageComponent {
       eyebrow: 'Rytuały twarzy',
       icon: '🌸',
       items: [
-        { name: 'Kobido Premium — japoński rytuał liftingujący', description: '75 min — masaż twarzy, szyi i dekoltu z pielęgnacją kosmetykami Thalgo', price: '260' },
-        { name: 'Masaż transbukalny', description: '45 min — głębokie rozluźnienie mięśni twarzy i żuchwy', price: '200' },
-        { name: 'Kobido Premium + masaż transbukalny', description: '100 min — kompleksowy rytuał twarzy z pielęgnacją kosmetykami Thalgo', price: '360' },
+        { name: 'Kobido Premium — japoński rytuał liftingujący', description: '75 min — naturalny lifting twarzy połączony z luksusową pielęgnacją Thalgo', price: '260' },
+        { name: 'Masaż transbukalny', description: '45 min — głębokie rozluźnienie mięśni twarzy i żuchwy, również od wewnątrz jamy ustnej', price: '200' },
+        { name: 'Kobido Premium + masaż transbukalny', description: '100 min — kompleksowy rytuał liftingujący z głębokim rozluźnieniem mięśni twarzy i luksusową pielęgnacją Thalgo', price: '360' },
       ]
     },
     {
@@ -487,8 +487,8 @@ export class PricingPageComponent {
       eyebrow: 'Rozwój ruchowy dziecka',
       icon: '🧸',
       items: [
-        { name: 'Konsultacja i ocena funkcjonalna dziecka', description: '60 min', price: '250' },
-        { name: 'Terapia ciała i trening funkcjonalny dzieci', description: '45 min — terapia manualna i ćwiczenia wspierające rozwój motoryczny, koordynację i równowagę', price: '180' },
+        { name: 'Konsultacja i ocena funkcjonalna dziecka', description: '60 min — kompleksowa ocena postawy, motoryki i rozwoju ruchowego dziecka', price: '250' },
+        { name: 'Terapia ciała i trening funkcjonalny dzieci', description: '45 min — indywidualna terapia wspierająca rozwój ruchowy, koordynację i równowagę', price: '180' },
       ]
     },
   ];
